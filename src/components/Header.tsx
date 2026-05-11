@@ -1,35 +1,41 @@
-import { Link, NavLink } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const Header = () => {
+  const { user, setUser } = useAuth();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+  };
+
   return (
-    <header className="sticky top-0 z-50 bg-[#111827]/90 backdrop-blur border-b border-gray-800">
+    <header className="bg-[#111827] border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-bold text-blue-500">
+        <Link to="/" className="text-3xl font-bold text-blue-500">
           BlogPlatform
         </Link>
 
-        <nav className="flex items-center gap-6">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              isActive ? "text-blue-500" : "text-gray-300"
-            }
-          >
-            Home
-          </NavLink>
+        <div className="flex items-center gap-4">
+          <Link to="/">Home</Link>
 
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              isActive ? "text-blue-500" : "text-gray-300"
-            }
-          >
-            Profile
-          </NavLink>
+          {user && <Link to="/profile">Profile</Link>}
 
-          <FaUserCircle className="text-3xl text-gray-300" />
-        </nav>
+          {!user ? (
+            <>
+              <Link to="/login">Login</Link>
+              <Link to="/register">Register</Link>
+            </>
+          ) : (
+            <button
+              onClick={logout}
+              className="bg-red-500 px-4 py-2 rounded-xl"
+            >
+              Logout
+            </button>
+          )}
+        </div>
       </div>
     </header>
   );

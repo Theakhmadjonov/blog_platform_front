@@ -1,14 +1,11 @@
-interface Props {
-  username: string;
-  text: string;
-}
-
-const CommentCard = ({ username, text }: Props) => {
+const CommentCard = ({ comment }: any) => {
   return (
-    <div className="bg-[#1e293b] p-4 rounded-xl">
-      <h3 className="font-semibold mb-2">{username}</h3>
+    <div className="bg-[#1e293b] rounded-xl p-4">
+      <h2 className="font-bold mb-2">
+        {comment.user?.name}
+      </h2>
 
-      <p className="text-gray-400">{text}</p>
+      <p className="text-gray-400">{comment.content}</p>
     </div>
   );
 };

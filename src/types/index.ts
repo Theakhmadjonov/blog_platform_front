@@ -1,15 +1,42 @@
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+export interface Data {
+  id: string;
+  email: string;
+  name: string;
+}
+
 export interface Comment {
-  id: number;
-  username: string;
-  text: string;
+  id: string;
+  content: string;
+  user: User;
 }
 
 export interface Blog {
-  id: number;
+  id: string;
   title: string;
   content: string;
-  image: string;
-  likes: number;
   published: boolean;
-  comments: Comment[];
+  createdAt: string;
+
+  author: {
+    name: string;
+    email: string;
+  };
+
+  comments: {
+    id: string;
+    content: string;
+  }[];
+
+  likes: any[];
+
+  _count: {
+    comments: number;
+    likes: number;
+  };
 }

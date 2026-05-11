@@ -1,28 +1,13 @@
-// import { createBrowserRouter } from "react-router-dom";
-// import HomePage from "../pages/HomePage";
-// import BlogPage from "../pages/BlogPage";
-// import Profile from "../pages/Profile";
-
-// export const routes = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <HomePage />,
-//   },
-//   {
-//     path: "/blog/:blogId",
-//     element: <BlogPage />,
-//   },
-//   {
-//     path: "/profile",
-//     element: <Profile />,
-//   },
-// ]);
-
 import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "../layouts/MainLayout";
 import HomePage from "../pages/HomePage";
 import BlogPage from "../pages/BlogPage";
 import Profile from "../pages/Profile";
-import MainLayout from "../layouts/MainLayout";
+import LoginPage from "../pages/LoginPage";
+import RegisterPage from "../pages/RegisterPage";
+import CreateBlogPage from "../pages/CreateBlogPage";
+import UpdateBlogPage from "../pages/UpdateBlogPage";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -34,12 +19,40 @@ export const routes = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "blog/:blogId",
+        path: "/post/:postId",
         element: <BlogPage />,
       },
       {
-        path: "profile",
-        element: <Profile />,
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/register",
+        element: <RegisterPage />,
+      },
+      {
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/create-blog",
+        element: (
+          <ProtectedRoute>
+            <CreateBlogPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/update-blog/:blogId",
+        element: (
+          <ProtectedRoute>
+            <UpdateBlogPage />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
