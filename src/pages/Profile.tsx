@@ -1,70 +1,84 @@
-import { useEffect, useState } from "react";
-import API from "../api/axios";
 import { Link } from "react-router-dom";
+import {
+  useGetUserPosts,
+  usePublishPost,
+  useRemoveUserPosts,
+} from "../hooks/useGetUserPosts";
 
 const Profile = () => {
-  const [blogs, setBlogs] = useState([]);
+  const { data: blogs, isLoading, refetch } = useGetUserPosts();
 
-  useEffect(() => {
-    fetchMyBlogs();
-  }, []);
+  const { mutateAsync: deletePost } = useRemoveUserPosts();
+  const { mutateAsync: publishPost } = usePublishPost();
 
-  const fetchMyBlogs = async () => {
-    const { data } = await API.get("/blogs/my-blogs");
-    setBlogs(data);
+  const handleDelete = async (id: string) => {
+    await deletePost(id);
+    refetch();
   };
 
-  const deleteBlog = async (id: string) => {
-    await API.delete(`/blogs/${id}`);
-    fetchMyBlogs();
+  const handlePublish = async (id: string) => {
+    await publishPost(id);
+    refetch();
   };
 
-  const publishBlog = async (id: string) => {
-    await API.patch(`/blogs/publish/${id}`);
-    fetchMyBlogs();
-  };
+  if (isLoading) {
+    return (
+      <h1 className="text-[28px] md:text-[40px] font-bold text-center mt-[80px]">
+        Loading...
+      </h1>
+    );
+  }
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="text-5xl font-bold">My Blogs</h1>
+    <div className="max-w-[1100px] mx-auto px-[20px] md:px-[40px] xl:px-0">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-[16px] mb-[40px]">
+        <h1 className="text-[32px] md:text-[46px] font-bold">My Blogs</h1>
 
-        <Link to="/create-blog" className="bg-blue-600 px-6 py-3 rounded-xl">
+        <Link
+          to="/create-blog"
+          className="bg-blue-600 px-[20px] py-[12px] rounded-[14px] w-fit"
+        >
           Create Blog
         </Link>
       </div>
 
-      <div className="space-y-6">
-        {blogs.map((blog: any) => (
-          <div key={blog.id} className="bg-[#1e293b] p-5 rounded-2xl">
+      <div className="space-y-[24px]">
+        {blogs?.map((blog: any) => (
+          <div
+            key={blog.id}
+            className="bg-[#1e293b] p-[18px] md:p-[24px] rounded-[24px]"
+          >
             <img
               src={blog.image}
-              alt={blog.title}
-              className="w-full h-72 object-cover rounded-xl mb-5"
+              className="w-full h-[180px] md:h-[280px] object-cover rounded-[16px] mb-[16px]"
             />
 
-            <h2 className="text-3xl font-bold mb-3">{blog.title}</h2>
+            <h2 className="text-[22px] md:text-[32px] font-bold mb-[10px]">
+              {blog.title}
+            </h2>
 
-            <p className="text-gray-400 mb-5">{blog.content}</p>
+            <p className="text-gray-400 text-[14px] md:text-[16px] mb-[18px]">
+              {blog.content}
+            </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-[10px]">
               <Link
                 to={`/update-blog/${blog.id}`}
-                className="bg-yellow-500 px-5 py-3 rounded-xl"
+                className="bg-yellow-500 px-[16px] py-[10px] rounded-[12px]"
               >
                 Update
               </Link>
 
               <button
-                onClick={() => publishBlog(blog.id)}
-                className="bg-green-600 px-5 py-3 rounded-xl"
+                onClick={() => handlePublish(blog.id)}
+                className="bg-green-600 px-[16px] py-[10px] rounded-[12px]"
               >
                 Publish
               </button>
 
               <button
-                onClick={() => deleteBlog(blog.id)}
-                className="bg-red-600 px-5 py-3 rounded-xl"
+                onClick={() => handleDelete(blog.id)}
+                className="bg-red-600 px-[16px] py-[10px] rounded-[12px]"
               >
                 Delete
               </button>

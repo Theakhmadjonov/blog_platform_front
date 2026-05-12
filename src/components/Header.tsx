@@ -1,39 +1,35 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import { useUserStore, type User } from "../zustand/userStore";
+import { useGetMe } from "../hooks/useGetMe";
 
 const Header = () => {
-  const { user, setUser } = useAuth();
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setUser(null);
-  };
-
+  const { data } = useGetMe();
+  const [userData, setUserData] = useState<User>();
+  const { setUser } = useUserStore();
+  useEffect(() => {
+    setUserData(data);
+    setUser(data);
+  }, []);
   return (
     <header className="bg-[#111827] border-b border-gray-800 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="text-3xl font-bold text-blue-500">
+      <div className="max-w-[1440px] mx-auto px-[20px] md:px-[40px] xl:px-[80px] py-[20px] flex items-center justify-between">
+        <Link
+          to="/"
+          className="text-[24px] md:text-[30px] font-bold text-blue-500"
+        >
           BlogPlatform
         </Link>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-[16px] md:gap-[24px] text-[14px] md:text-[16px]">
           <Link to="/">Home</Link>
 
-          {user && <Link to="/profile">Profile</Link>}
+          {userData && <Link to="/profile">Profile</Link>}
 
-          {!user ? (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </>
+          {!userData ? (
+            <Link to="/login">Login</Link>
           ) : (
-            <button
-              onClick={logout}
-              className="bg-red-500 px-4 py-2 rounded-xl"
-            >
-              Logout
-            </button>
+            <Link to="/register">Register</Link>
           )}
         </div>
       </div>
