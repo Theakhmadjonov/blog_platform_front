@@ -8,9 +8,11 @@ const Header = () => {
   const [userData, setUserData] = useState<User>();
   const { setUser } = useUserStore();
   useEffect(() => {
-    setUserData(data);
-    setUser(data);
-  }, []);
+    if (data) {
+      setUserData(data);
+      setUser(data);
+    }
+  }, [data]);
   return (
     <header className="bg-[#111827] border-b border-gray-800 sticky top-0 z-50">
       <div className="max-w-[1440px] mx-auto px-[20px] md:px-[40px] xl:px-[80px] py-[20px] flex items-center justify-between">

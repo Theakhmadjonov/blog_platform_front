@@ -1,23 +1,17 @@
-// import { createRoot } from "react-dom/client";
-// import { RouterProvider } from "react-router-dom";
-// import "./index.css";
-// import Providers from "./providers/provider";
-// import { routes } from "./routes/route";
-
-// createRoot(document.getElementById("root")!).render(
-//   <Providers>
-//     <RouterProvider router={routes} />
-//   </Providers>,
-// );
-
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import "./index.css";
 import { AuthProvider } from "./context/AuthContext";
 import { routes } from "./routes/route";
+import "./index.css";
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <AuthProvider>
-    <RouterProvider router={routes} />
-  </AuthProvider>,
+  <QueryClientProvider client={queryClient}>
+    <AuthProvider>
+      <RouterProvider router={routes} />
+    </AuthProvider>
+  </QueryClientProvider>,
 );
