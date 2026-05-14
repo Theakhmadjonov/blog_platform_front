@@ -5,7 +5,7 @@ export const useLike = () => {
   return useMutation({
     mutationKey: ["like"],
     mutationFn: (postId: string) => {
-      const data = api.post(`post/${postId}/like`);
+      const data = api.post(`/like/${postId}`);
       console.log(data);
       return data;
     },
@@ -16,7 +16,7 @@ export const useRemoveLike = () => {
   return useMutation({
     mutationKey: ["remove-like"],
     mutationFn: async (postId: string) => {
-      return await api.delete(`/post/${postId}/like`);
+      return await api.delete(`/like/${postId}`);
     },
   });
 };

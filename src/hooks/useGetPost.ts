@@ -6,9 +6,7 @@ export const useGetPost = (postId: string) => {
     queryKey: ["post-data", postId],
     queryFn: async () => {
       const response = await api.get(`/post/${postId}`);
-
-      console.log(response.data);
-
+      console.log("blogData", response.data);
       return response.data;
     },
   });

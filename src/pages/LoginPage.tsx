@@ -16,8 +16,9 @@ const LoginPage = () => {
         email,
         password,
       });
-      localStorage.setItem("token", data.accessToken);
-      setUser(data.user);
+      localStorage.setItem("accessToken", data.token);
+      setUser(data.data);
+      console.log("userData", data);
       navigate("/");
     } catch (error) {
       console.log(error);

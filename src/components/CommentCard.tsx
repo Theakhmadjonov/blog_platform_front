@@ -1,8 +1,8 @@
-const CommentCard = ({ comment }: any) => {
+const CommentCard = ({ comment, author }: { comment: any; author: any }) => {
   return (
     <div className="bg-[#1e293b] rounded-xl p-4">
       <h2 className="font-bold mb-2">
-        {comment.user?.name}
+        {comment.userId === author?.id ? "author" : comment.user.name}
       </h2>
 
       <p className="text-gray-400">{comment.content}</p>

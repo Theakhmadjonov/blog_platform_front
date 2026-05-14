@@ -32,7 +32,7 @@ export const usePublishPost = () => {
     mutationKey: ["publish-post"],
 
     mutationFn: async (postId: string) => {
-      return api.put(`/post/${postId}/publish`);
+      return api.put(`/post/publish/${postId}`);
     },
   });
 };

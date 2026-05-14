@@ -69,12 +69,14 @@ const Profile = () => {
                 Update
               </Link>
 
-              <button
-                onClick={() => handlePublish(blog.id)}
-                className="bg-green-600 px-[16px] py-[10px] rounded-[12px]"
-              >
-                Publish
-              </button>
+              {!blog.published && (
+                <button
+                  onClick={() => handlePublish(blog.id)}
+                  className="bg-green-600 px-[16px] py-[10px] rounded-[12px]"
+                >
+                  Publish
+                </button>
+              )}
 
               <button
                 onClick={() => handleDelete(blog.id)}
