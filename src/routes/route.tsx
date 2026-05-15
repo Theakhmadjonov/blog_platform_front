@@ -6,7 +6,7 @@ import Profile from "../pages/Profile";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import CreateBlogPage from "../pages/CreateBlogPage";
-// import UpdateBlogPage from "../pages/UpdateBlogPage";
+import UpdateBlogPage from "../pages/UpdateBlogPage";
 import ProtectedRoute from "../components/ProtectedRoute";
 
 export const routes = createBrowserRouter([
@@ -50,7 +50,7 @@ export const routes = createBrowserRouter([
         path: "/update-blog/:blogId",
         element: (
           <ProtectedRoute>
-            <CreateBlogPage />
+            <UpdateBlogPage />
           </ProtectedRoute>
         ),
       },

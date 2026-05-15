@@ -155,6 +155,7 @@ const BlogPage = () => {
                 key={comment.id}
                 comment={comment}
                 author={data.data.author}
+                userId={user?.id}
               />
             ))
           ) : (

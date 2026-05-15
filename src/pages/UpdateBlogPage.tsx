@@ -1,71 +1,66 @@
-// import { useEffect, useState } from "react";
-// import API from "../config/axios";
-// import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUpdatePost } from "../hooks/useUpdatePost";
 
-// const UpdateBlogPage = () => {
-//   const { blogId } = useParams();
-//   const navigate = useNavigate();
+const UpdateBlogPage = () => {
+  const { blogId } = useParams();
+  const navigate = useNavigate();
+  const { mutateAsync: updatePost, isPending } = useUpdatePost(
+    blogId as string,
+  );
 
-//   const [title, setTitle] = useState("");
-//   const [content, setContent] = useState("");
-//   const [image, setImage] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
-//   useEffect(() => {
-//     fetchBlog();
-//   }, []);
+  const updateBlog = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-//   const fetchBlog = async () => {
-//     const { data } = await API.get(`/blogs/${blogId}`);
+    try {
+      console.log("title, content", title, content);
+      await updatePost({
+        title,
+        content,
+      });
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-//     setTitle(data.title);
-//     setContent(data.content);
-//     setImage(data.image);
-//   };
+  return (
+    <div className="max-w-[1100px] mx-auto px-[20px] md:px-[40px] xl:px-0">
+      <div className="bg-[#1e293b] p-[24px] md:p-[40px] rounded-[24px]">
+        <h1 className="text-[32px] md:text-[46px] font-bold mb-[30px]">
+          Update Blog
+        </h1>
 
-//   const updateBlog = async (e: any) => {
-//     e.preventDefault();
+        <form onSubmit={updateBlog} className="space-y-[20px]">
+          <input
+            type="text"
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full bg-[#0f172a] p-[16px] rounded-[14px] outline-none"
+          />
 
-//     await API.patch(`/blogs/${blogId}`, {
-//       title,
-//       content,
-//       image,
-//     });
+          <textarea
+            rows={10}
+            placeholder="Content"
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="w-full bg-[#0f172a] p-[16px] rounded-[14px] outline-none resize-none"
+          />
 
-//     navigate("/profile");
-//   };
+          <button
+            disabled={isPending}
+            className="bg-yellow-500 px-[20px] py-[12px] rounded-[14px]"
+          >
+            {isPending ? "Updating..." : "Update Blog"}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-//   return (
-//     <div className="max-w-3xl mx-auto bg-[#1e293b] p-8 rounded-3xl">
-//       <h1 className="text-4xl font-bold mb-8">Update Blog</h1>
-
-//       <form onSubmit={updateBlog} className="space-y-5">
-//         <input
-//           type="text"
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//           className="w-full bg-[#0f172a] p-4 rounded-xl outline-none"
-//         />
-
-//         <input
-//           type="text"
-//           value={image}
-//           onChange={(e) => setImage(e.target.value)}
-//           className="w-full bg-[#0f172a] p-4 rounded-xl outline-none"
-//         />
-
-//         <textarea
-//           rows={10}
-//           value={content}
-//           onChange={(e) => setContent(e.target.value)}
-//           className="w-full bg-[#0f172a] p-4 rounded-xl outline-none"
-//         />
-
-//         <button className="bg-yellow-500 px-8 py-4 rounded-xl">
-//           Update Blog
-//         </button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default UpdateBlogPage;
+export default UpdateBlogPage;
