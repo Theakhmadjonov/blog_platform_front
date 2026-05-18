@@ -6,7 +6,6 @@ export const useLike = () => {
     mutationKey: ["like"],
     mutationFn: (postId: string) => {
       const data = api.post(`/like/${postId}`);
-      console.log(data);
       return data;
     },
   });
@@ -20,4 +19,3 @@ export const useRemoveLike = () => {
     },
   });
 };
-
