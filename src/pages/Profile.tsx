@@ -4,6 +4,7 @@ import {
   usePublishPost,
   useRemoveUserPosts,
 } from "../hooks/useGetUserPosts";
+import img from "../images/Screenshot From 2025-09-24 21-57-02.png";
 
 const Profile = () => {
   const { data: blogs, isLoading, refetch } = useGetUserPosts();
@@ -49,7 +50,7 @@ const Profile = () => {
             className="bg-[#1e293b] p-[18px] md:p-[24px] rounded-[24px]"
           >
             <img
-              src={blog.image}
+              src={blog.image ? blog.image : img}
               className="w-full h-[180px] md:h-[280px] object-cover rounded-[16px] mb-[16px]"
             />
 

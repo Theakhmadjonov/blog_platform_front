@@ -8,7 +8,7 @@ const UpdateBlogPage = () => {
   const { mutateAsync: updatePost, isPending } = useUpdatePost(
     blogId as string,
   );
-
+  console.log(blogId);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -16,11 +16,11 @@ const UpdateBlogPage = () => {
     e.preventDefault();
 
     try {
-      console.log("title, content", title, content);
       await updatePost({
         title,
         content,
       });
+      console.log("mi");
       navigate("/profile");
     } catch (error) {
       console.log(error);

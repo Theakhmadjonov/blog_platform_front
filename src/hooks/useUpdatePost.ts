@@ -10,7 +10,7 @@ export const useUpdatePost = (postId: string) => {
   return useMutation({
     mutationKey: ["update-post", postId],
     mutationFn: async ({ title, content }: PostUpdatePayload) => {
-      return api.put(`/post/update/${postId}`, { title, content });
+      return await api.put(`/post/update/${postId}`, { title, content });
     },
   });
 };
